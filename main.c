@@ -62,3 +62,45 @@ void UART5_Transmit(uint8_t data) {
     while (UART5_FR_R & UART_FR_TXFF);  // Wait until the transmit FIFO is not full
     UART5_DR_R = data;                  // Transmit data
 }
+void UART5_Read(void){
+
+    receivedByte =  UART5_ReceiveByte();
+
+    if(dataReceivedFlag){
+
+        if (UART5_FR_R & 0x04) {
+            GPIO_PORTF_DATA_R |= 0x08;  // Turn on green LED
+                                GPIO_PORTF_DATA_R &= ~0x04;   // Turn off blue LED
+                                GPIO_PORTF_DATA_R &= ~0x02;     // Turn off red LED (error
+        }
+
+    else{
+
+
+        if (receivedByte == 0xAA)
+        {
+            GPIO_PORTF_DATA_R |= 0x08;  // Turn on green LED
+            GPIO_PORTF_DATA_R &= ~0x04;   // Turn off blue LED
+            GPIO_PORTF_DATA_R &= ~0x02;     // Turn off red LED (error
+
+            }
+        else if (receivedByte == 0xF0)
+        {
+            GPIO_PORTF_DATA_R &= ~0x08;  // Turn off green LED
+             GPIO_PORTF_DATA_R |= 0x04;   // Turn on blue LED
+             GPIO_PORTF_DATA_R &= ~0x02;     // Turn off red LED (error
+
+        }
+        else
+        {
+            GPIO_PORTF_DATA_R &= ~0x08;  // Turn off green LED
+            GPIO_PORTF_DATA_R &= ~0x04;   // Turn off blue LED
+            GPIO_PORTF_DATA_R |= 0x02;     // Turn on red LED (error)
+
+        }
+    }
+
+
+
+    }
+}
