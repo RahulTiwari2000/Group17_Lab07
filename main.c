@@ -115,3 +115,13 @@ void UART5_send(void){
         while (!(GPIO_PORTF_DATA_R & 0X10)); // Wait until released
     }
 }
+int main(void) {
+    PortF_Initialisation();
+    PORTE_Initialisation();
+    UART5_Initialisation();
+
+    while (1) {
+
+        UART5_Read();
+    }
+}
