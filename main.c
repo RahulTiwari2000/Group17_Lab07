@@ -58,3 +58,7 @@ uint8_t UART5_ReceiveByte(void) {
     return UART5_DR_R; // Read data
 
 }
+void UART5_Transmit(uint8_t data) {
+    while (UART5_FR_R & UART_FR_TXFF);  // Wait until the transmit FIFO is not full
+    UART5_DR_R = data;                  // Transmit data
+}
